@@ -1,3 +1,7 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import {
   LayoutDashboard,
@@ -8,12 +12,12 @@ import {
   Settings as SettingsIcon,
 } from "lucide-react";
 const navItems = [
-  { label: "Dashboard", icon: LayoutDashboard, active: true },
-  { label: "Devices", icon: LayoutList },
-  { label: "Alerts", icon: BellElectric },
-  { label: "Locate Device", icon: LocateFixed },
-  { label: "Analytics", icon: ChartArea },
-  { label: "Settings", icon: SettingsIcon },
+  { label: "Dashboard", icon: LayoutDashboard, href: "/admin" },
+  { label: "Devices", icon: LayoutList, href: "/admin/devices" },
+  { label: "Alerts", icon: BellElectric, href: "/admin/alerts" },
+  { label: "Locate Device", icon: LocateFixed, href: "/admin/locate" },
+  { label: "Analytics", icon: ChartArea, href: "/admin/analytics" },
+  { label: "Settings", icon: SettingsIcon, href: "/admin/settings" },
 ];
 
 const Sidebar = ({
@@ -24,6 +28,8 @@ const Sidebar = ({
   toggleCollapsed: () => void;
 }) => {
   const sidebarWidth = collapsed ? "w-16" : "w-64";
+
+  const pathname = usePathname() || "";
 
   return (
     <aside
@@ -47,10 +53,16 @@ const Sidebar = ({
         </div>
         <nav className="flex flex-col gap-2">
           {navItems.map((item) => {
-            const isActive = item.active;
-            return (
+            let isActive = false;
+            if (item.href) {
+              if (item.href === "/admin") {
+                isActive = pathname === "/admin" || pathname === "/admin/";
+              } else {
+                isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+              }
+            }
+            const ItemInner = (
               <div
-                key={item.label}
                 className={`flex items-center cursor-pointer transition-colors text-base font-medium
                   ${collapsed ? "justify-center" : "gap-3 px-2"}
                   ${isActive && !collapsed ? "bg-secondary text-background rounded-r-full py-2" : ""}
@@ -73,6 +85,18 @@ const Sidebar = ({
                   {item.icon && <item.icon size={22} className="text-accent" />}
                 </span>
                 {!collapsed && <span>{item.label}</span>}
+              </div>
+            );
+
+            return (
+              <div key={item.label}>
+                {item.href ? (
+                  <Link href={item.href} replace>
+                    {ItemInner}
+                  </Link>
+                ) : (
+                  ItemInner
+                )}
               </div>
             );
           })}
