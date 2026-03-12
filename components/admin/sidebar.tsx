@@ -16,9 +16,13 @@ const navItems = [
   { label: "Settings", icon: SettingsIcon },
 ];
 
-
-
-const Sidebar = ({ collapsed, toggleCollapsed }: { collapsed: boolean; toggleCollapsed: () => void }) => {
+const Sidebar = ({
+  collapsed,
+  toggleCollapsed,
+}: {
+  collapsed: boolean;
+  toggleCollapsed: () => void;
+}) => {
   const sidebarWidth = collapsed ? "w-16" : "w-64";
 
   return (
@@ -28,7 +32,11 @@ const Sidebar = ({ collapsed, toggleCollapsed }: { collapsed: boolean; toggleCol
     >
       <div>
         <div className="flex items-center gap-3 mb-8 px-2">
-          {!collapsed && <span className="font-bold text-lg whitespace-nowrap">Company Name</span>}
+          {!collapsed && (
+            <span className="font-bold text-lg whitespace-nowrap">
+              Company Name
+            </span>
+          )}
           <button
             className="ml-auto text-2xl focus:outline-none cursor-pointer"
             onClick={toggleCollapsed}
@@ -48,7 +56,7 @@ const Sidebar = ({ collapsed, toggleCollapsed }: { collapsed: boolean; toggleCol
                   ${isActive && !collapsed ? "bg-secondary text-background rounded-r-full py-2" : ""}
                   ${!isActive && !collapsed ? "hover:bg-secondary/30 rounded-r-full py-2" : ""}
                 `}
-                style={collapsed ? { width: '3rem', height: '3rem' } : {}}
+                style={collapsed ? { width: "3rem", height: "3rem" } : {}}
               >
                 <span
                   className={
@@ -56,11 +64,13 @@ const Sidebar = ({ collapsed, toggleCollapsed }: { collapsed: boolean; toggleCol
                       ? "bg-secondary text-background rounded-full flex items-center justify-center w-12 h-12"
                       : "w-8 flex justify-center"
                   }
-                  style={isActive && collapsed ? { minWidth: '3rem', minHeight: '3rem' } : {}}
+                  style={
+                    isActive && collapsed
+                      ? { minWidth: "3rem", minHeight: "3rem" }
+                      : {}
+                  }
                 >
-                  {item.icon && (
-                    <item.icon size={22} className="text-accent" />
-                  )}
+                  {item.icon && <item.icon size={22} className="text-accent" />}
                 </span>
                 {!collapsed && <span>{item.label}</span>}
               </div>
@@ -68,8 +78,12 @@ const Sidebar = ({ collapsed, toggleCollapsed }: { collapsed: boolean; toggleCol
           })}
         </nav>
       </div>
-      <div className="flex items-center gap-3 px-2 mt-8">
-        <span className="text-2xl font-mono">U</span>
+      <div
+        className={`flex items-center px-2 mt-8 ${collapsed ? "justify-center" : "gap-3"}`}
+      >
+        <div className="h-10 w-10 min-w-10 min-h-10 bg-white rounded-full border-2 border-accent flex items-center justify-center font-bold text-primary text-lg select-none flex-shrink-0">
+          P
+        </div>
         {!collapsed && (
           <div>
             <div className="font-semibold leading-tight">Phinehas Abdu</div>

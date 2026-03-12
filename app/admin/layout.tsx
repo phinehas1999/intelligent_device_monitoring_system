@@ -36,7 +36,7 @@ export default function AdminLayout({
           collapsed={collapsed}
           toggleCollapsed={() => setCollapsed((c) => !c)}
         />
-        <main className="p-4 md:p-8">{children}</main>
+        <main className="mt-12 p-4 md:p-8">{children}</main>
       </div>
     </div>
   );
