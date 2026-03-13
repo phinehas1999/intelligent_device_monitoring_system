@@ -12,22 +12,22 @@ export default function AdminPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <StatCard
-          icon={<Power size={20} className="text-primary" />}
+          icon={<Power size={20} className="text-green-600" />}
           title="Devices Online"
           value={124}
         />
         <StatCard
-          icon={<GlobeOff size={20} className="text-primary" />}
+          icon={<GlobeOff size={20} className="text-red-600" />}
           title="Devices Offline"
           value={3}
         />
         <StatCard
-          icon={<BellElectric size={20} className="text-primary" />}
+          icon={<BellElectric size={20} className="text-yellow-600" />}
           title="Active Alerts"
           value={7}
         />
         <StatCard
-          icon={<ScanHeart size={20} className="text-primary" />}
+          icon={<ScanHeart size={20} className="text-blue-600" />}
           title="Avg Health Score"
           value={`92%`}
         />

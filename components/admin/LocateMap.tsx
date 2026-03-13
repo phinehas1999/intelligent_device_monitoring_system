@@ -14,8 +14,8 @@ export default function LocateMap({ devices }: { devices: Device[] }) {
   const [hover, setHover] = useState<number | null>(null);
 
   return (
-    <div className="relative w-full h-[460px] bg-white rounded-xl shadow-md overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#fffaf6] to-[#f7f7f7]" />
+    <div className="relative w-full h-115 bg-white rounded-xl shadow-md overflow-hidden">
+      <div className="absolute inset-0 bg-linear-to-br from-[#fffaf6] to-background" />
 
       <div className="absolute inset-4 rounded-lg overflow-hidden border border-transparent">
         {/* stylized map area */}

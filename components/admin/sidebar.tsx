@@ -107,7 +107,7 @@ const Sidebar = ({
       <div
         className={`flex items-center px-2 mt-8 ${collapsed ? "justify-center" : "gap-3"}`}
       >
-        <div className="h-10 w-10 min-w-10 min-h-10 bg-white rounded-full border-2 border-accent flex items-center justify-center font-bold text-primary text-lg select-none flex-shrink-0">
+        <div className="h-10 w-10 min-w-10 min-h-10 bg-white rounded-full border-2 border-accent flex items-center justify-center font-bold text-primary text-lg select-none shrink-0">
           P
         </div>
         {!collapsed && (

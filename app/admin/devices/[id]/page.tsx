@@ -39,10 +39,10 @@ export default function DeviceDetailPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         {/* Device Info */}
-        <div className="rounded-xl bg-[#f3ebdb] shadow-md p-4 flex-1 min-w-[220px]">
+        <div className="rounded-xl bg-[#f3ebdb] shadow-md p-4 flex-1 min-w-55">
           <div className="flex justify-between items-center mb-2">
             <span className="font-semibold flex items-center gap-2 text-lg">
-              <Power size={20} /> Device Info
+              <Power size={20} className="text-green-600" /> Device Info
             </span>
             <span className="text-xs text-green-700 font-semibold">
               {device.status}
@@ -63,10 +63,11 @@ export default function DeviceDetailPage() {
           </div>
         </div>
         {/* System/Connectivity Info */}
-        <div className="rounded-xl bg-[#f3ebdb] shadow-md p-4 flex-1 min-w-[220px]">
+        <div className="rounded-xl bg-[#f3ebdb] shadow-md p-4 flex-1 min-w-55">
           <div className="flex justify-between items-center mb-2">
             <span className="font-semibold flex items-center gap-2 text-lg">
-              <Cpu size={20} /> System / Connectivity Info
+              <Cpu size={20} className="text-blue-600" /> System / Connectivity
+              Info
             </span>
           </div>
           <div className="bg-white rounded-md overflow-hidden text-sm border mt-2">
@@ -81,9 +82,9 @@ export default function DeviceDetailPage() {
           </div>
         </div>
         {/* Alert History */}
-        <div className="rounded-xl bg-[#f3ebdb] shadow-md p-4 flex-1 min-w-[220px]">
+        <div className="rounded-xl bg-[#f3ebdb] shadow-md p-4 flex-1 min-w-55">
           <div className="font-semibold flex items-center gap-2 text-lg mb-2">
-            <Wifi size={20} /> Alert History
+            <Wifi size={20} className="text-yellow-600" /> Alert History
           </div>
           <div className="bg-white rounded-md overflow-hidden text-sm border mt-2 max-h-40">
             <ul>

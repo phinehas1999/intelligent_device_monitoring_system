@@ -17,12 +17,12 @@ export default function LocateDevicePage() {
       {/* Stat cards row - responsive full width */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <StatCard
-          icon={<Power size={20} className="text-primary" />}
+          icon={<Power size={20} className="text-green-600" />}
           title="Devices Online"
           value={124}
         />
         <StatCard
-          icon={<GlobeOff size={20} className="text-primary" />}
+          icon={<GlobeOff size={20} className="text-red-600" />}
           title="Devices Offline"
           value={3}
         />
@@ -45,7 +45,7 @@ export default function LocateDevicePage() {
         <img
           src="/map-placeholder.png"
           alt="Map placeholder"
-          className="w-full h-[420px] object-cover"
+          className="w-full h-105 object-cover"
         />
         {/* Example marker overlays could go here */}
       </div>

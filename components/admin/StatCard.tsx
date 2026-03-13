@@ -8,7 +8,7 @@ type Props = {
 
 export default function StatCard({ icon, title, value }: Props) {
   return (
-    <div className="bg-accent text-primary rounded-2xl shadow-[0_8px_0_rgba(0,0,0,0.06)] p-5 relative overflow-hidden min-h-[140px]">
+    <div className="bg-accent text-primary rounded-2xl shadow-[0_8px_0_rgba(0,0,0,0.06)] p-5 relative overflow-hidden min-h-35">
       <div className="flex items-center gap-2">
         <div className="text-2xl text-primary flex items-center transform scale-125">
           {icon}

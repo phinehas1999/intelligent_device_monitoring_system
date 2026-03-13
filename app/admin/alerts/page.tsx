@@ -10,12 +10,12 @@ export default function AlertsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <StatCard
-          icon={<BellElectric size={20} className="text-primary" />}
+          icon={<BellElectric size={20} className="text-yellow-600" />}
           title="Alerts"
           value={124}
         />
         <StatCard
-          icon={<GlobeOff size={20} className="text-primary" />}
+          icon={<GlobeOff size={20} className="text-red-600" />}
           title="Devices Offline"
           value={3}
         />
