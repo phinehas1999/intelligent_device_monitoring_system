@@ -1,11 +1,11 @@
+import { Search, Filter } from "lucide-react";
 import StatCard from "@/components/admin/StatCard";
-import DevicesActions from "@/components/admin/DevicesActions";
-import { GlobeOff, BellElectric } from "lucide-react";
 
-// Mock alert data
-const alerts = [
+// Mock alert data across all tenants
+const globalAlerts = [
   {
     time: "10:21",
+    tenant: "Acme Corp",
     device: "Pump-02",
     alert: "Temperature Spike",
     severity: "High",
@@ -13,6 +13,7 @@ const alerts = [
   },
   {
     time: "09:10",
+    tenant: "Stark Industries",
     device: "Motor-01",
     alert: "Vibration Anomaly",
     severity: "Medium",
@@ -20,6 +21,7 @@ const alerts = [
   },
   {
     time: "08:45",
+    tenant: "Globex Inc",
     device: "Fan-03",
     alert: "Power Loss",
     severity: "Critical",
@@ -27,10 +29,19 @@ const alerts = [
   },
   {
     time: "07:30",
+    tenant: "Initech",
     device: "Pump-01",
     alert: "Temperature Spike",
     severity: "Low",
     status: "Open",
+  },
+  {
+    time: "06:15",
+    tenant: "Stark Industries",
+    device: "Generator-04",
+    alert: "Connection Lost",
+    severity: "Critical",
+    status: "Investigating",
   },
 ];
 
@@ -49,56 +60,53 @@ function getSeverityColor(severity: string) {
   }
 }
 
-export default function AlertsPage() {
+export default function GlobalAlertsPage() {
   return (
     <div className="w-full max-w-full">
-      <h1 className="text-2xl font-bold mb-4">Alerts</h1>
+      <h1 className="text-2xl font-bold mb-4">Global Alerts Monitor</h1>
+      <p className="text-gray-500 mb-6 text-sm">
+        View and manage system-wide alerts across all tenant instances.
+      </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-        <StatCard
-          icon={<BellElectric size={20} className="text-yellow-600" />}
-          title="Alerts"
-          value={124}
-        />
-        <StatCard
-          icon={<GlobeOff size={20} className="text-red-600" />}
-          title="Devices Offline"
-          value={3}
-        />
-      </div>
-
-      <div className="mb-4 flex flex-wrap items-center gap-4">
-        <input
-          placeholder="Search Alerts..."
-          className="flex-1 min-w-50 max-w-full md:max-w-lg p-2 rounded-full bg-accent border-none shadow-inner"
-        />
-
-        <div className="ml-auto">
-          <DevicesActions />
+      <div className="flex flex-wrap gap-4 mb-6">
+        <div className="flex-1 min-w-[200px] flex items-center bg-white px-3 py-2 rounded-lg border border-gray-200">
+          <Search size={18} className="text-gray-400 mr-2" />
+          <input
+            type="text"
+            placeholder="Search by device, alert type or tenant..."
+            className="w-full outline-none text-sm bg-transparent"
+          />
         </div>
+        <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors">
+          <Filter size={16} /> Filter
+        </button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 w-full overflow-hidden">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden w-full">
         <div className="overflow-x-auto">
           <table className="min-w-full text-sm">
             <thead>
-              <tr className="bg-gray-50 text-gray-700 border-b border-gray-100">
+              <tr className="bg-accent text-primary border-b border-gray-100">
                 <th className="px-5 py-3 text-left font-semibold">Time</th>
+                <th className="px-5 py-3 text-left font-semibold">Tenant</th>
                 <th className="px-5 py-3 text-left font-semibold">Device</th>
-                <th className="px-5 py-3 text-left font-semibold">Alert</th>
+                <th className="px-5 py-3 text-left font-semibold">
+                  Alert Type
+                </th>
                 <th className="px-5 py-3 text-left font-semibold">Severity</th>
                 <th className="px-5 py-3 text-left font-semibold">Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
-              {alerts.map((a, idx) => (
+              {globalAlerts.map((a, idx) => (
                 <tr key={idx} className="hover:bg-gray-50 transition-colors">
                   <td className="px-5 py-4 whitespace-nowrap text-gray-500">
                     {a.time}
                   </td>
                   <td className="px-5 py-4 whitespace-nowrap font-medium">
-                    {a.device}
+                    {a.tenant}
                   </td>
+                  <td className="px-5 py-4 whitespace-nowrap">{a.device}</td>
                   <td className="px-5 py-4 whitespace-nowrap">{a.alert}</td>
                   <td className="px-5 py-4 whitespace-nowrap">
                     <span

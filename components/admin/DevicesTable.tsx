@@ -14,31 +14,43 @@ export default function DevicesTable() {
   }));
 
   return (
-    <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden w-full">
       <div className="p-0">
         <div className="overflow-x-auto">
           <table className="min-w-full text-sm">
-            <thead className="bg-accent text-primary">
-              <tr>
+            <thead>
+              <tr className="bg-gray-50 text-gray-700 border-b border-gray-100">
                 {columns.map((c) => (
-                  <th key={c} className="py-3 px-4 text-left font-medium">
+                  <th key={c} className="px-5 py-3 text-left font-semibold">
                     {c}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-gray-50">
               {rows.map((r, idx) => (
                 <tr
                   key={idx}
-                  className="border-t last:border-b-0 cursor-pointer hover:bg-accent/60 transition"
+                  className="cursor-pointer hover:bg-gray-50 transition-colors"
                   onClick={() => router.push(`/admin/devices/${r.id}`)}
                 >
-                  <td className="py-4 px-4">{r.name}</td>
-                  <td className="py-4 px-4">{r.type}</td>
-                  <td className="py-4 px-4">{r.status}</td>
-                  <td className="py-4 px-4">{r.location}</td>
-                  <td className="py-4 px-4">{r.health}</td>
+                  <td className="px-5 py-4 font-medium">{r.name}</td>
+                  <td className="px-5 py-4 text-gray-600">{r.type}</td>
+                  <td className="px-5 py-4">
+                    <span
+                      className={`px-2.5 py-1 rounded-md text-xs font-semibold ${
+                        r.status === "Healthy"
+                          ? "text-green-700 bg-green-50"
+                          : r.status === "Warning"
+                            ? "text-yellow-700 bg-yellow-50"
+                            : "text-red-700 bg-red-50"
+                      }`}
+                    >
+                      {r.status}
+                    </span>
+                  </td>
+                  <td className="px-5 py-4 text-gray-600">{r.location}</td>
+                  <td className="px-5 py-4 font-medium">{r.health}</td>
                 </tr>
               ))}
             </tbody>

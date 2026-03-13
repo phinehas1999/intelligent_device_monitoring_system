@@ -5,19 +5,25 @@ import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import {
   LayoutDashboard,
-  LayoutList,
-  BellElectric,
-  LocateFixed,
-  ChartArea,
-  Settings as SettingsIcon,
+  Users,
+  CreditCard,
+  AlertTriangle,
+  FileText,
+  Receipt,
+  LogOut,
 } from "lucide-react";
+
 const navItems = [
-  { label: "Dashboard", icon: LayoutDashboard, href: "/admin" },
-  { label: "Devices", icon: LayoutList, href: "/admin/devices" },
-  { label: "Alerts", icon: BellElectric, href: "/admin/alerts" },
-  { label: "Locate Device", icon: LocateFixed, href: "/admin/locate_device" },
-  { label: "Analytics", icon: ChartArea, href: "/admin/analytics" },
-  { label: "Settings", icon: SettingsIcon, href: "/admin/settings" },
+  { label: "Platform Dashboard", icon: LayoutDashboard, href: "/platform" },
+  { label: "Tenants", icon: Users, href: "/platform/tenants" },
+  { label: "Subscriptions", icon: CreditCard, href: "/platform/subscriptions" },
+  {
+    label: "Global Alerts",
+    icon: AlertTriangle,
+    href: "/platform/global-alerts",
+  },
+  { label: "System Logs", icon: FileText, href: "/platform/system-logs" },
+  { label: "Billing", icon: Receipt, href: "/platform/billing" },
 ];
 
 const Sidebar = ({
@@ -28,7 +34,6 @@ const Sidebar = ({
   toggleCollapsed: () => void;
 }) => {
   const sidebarWidth = collapsed ? "w-16" : "w-64";
-
   const pathname = usePathname() || "";
 
   return (
@@ -40,26 +45,20 @@ const Sidebar = ({
         <div className="flex items-center gap-3 mb-8 px-2">
           <button
             onClick={toggleCollapsed}
-            className="p-2 hover:bg-white/10 rounded-full transition-colors cursor-pointer text-accent focus:outline-none"
-            aria-label="Toggle sidebar"
+            className="p-2 hover:bg-white/10 rounded-full transition-colors"
           >
             <Menu size={24} />
           </button>
           {!collapsed && (
-            <span className="font-bold text-xl tracking-tight whitespace-nowrap">
-              Acme Corp
-            </span>
+            <span className="font-bold text-xl tracking-tight">IDMS OS</span>
           )}
         </div>
 
         <nav className="flex flex-col gap-2">
           {navItems.map((item) => {
             const isActive =
-              item.href === "/admin"
-                ? pathname === "/admin"
-                : pathname === item.href ||
-                  pathname.startsWith(item.href + "/");
-
+              pathname === item.href ||
+              (pathname.startsWith(item.href) && item.href !== "/platform");
             return (
               <Link
                 key={item.label}
@@ -90,14 +89,14 @@ const Sidebar = ({
           className={`flex items-center gap-3 p-3 rounded-xl border border-white/10 ${collapsed ? "justify-center" : ""}`}
         >
           <div className="w-8 h-8 rounded-full bg-accent text-primary flex items-center justify-center font-bold">
-            PA
+            SA
           </div>
           {!collapsed && (
             <div className="flex-1 overflow-hidden">
-              <div className="text-sm font-semibold truncate">
-                Phinehas Abdu
+              <div className="text-sm font-semibold truncate">System Admin</div>
+              <div className="text-xs text-accent/60 truncate">
+                admin@idms.com
               </div>
-              <div className="text-xs text-accent/60 truncate">Admin</div>
             </div>
           )}
         </div>

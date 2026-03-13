@@ -7,12 +7,17 @@ export default function RecentAlerts() {
   ];
 
   return (
-    <div className="bg-accent rounded-lg shadow-md p-4">
-      <div className="font-semibold mb-3">Recent Alerts</div>
-      <div className="bg-white rounded-md p-2 overflow-hidden">
-        <ul className="text-sm">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col h-full">
+      <div className="font-semibold text-gray-900 mb-4 text-lg">
+        Recent Alerts
+      </div>
+      <div className="rounded-lg overflow-hidden flex-1">
+        <ul className="text-sm divide-y divide-gray-50 flex flex-col h-full">
           {items.map((it, idx) => (
-            <li key={idx} className="border-b last:border-b-0 px-3 py-2">
+            <li
+              key={idx}
+              className="py-3 hover:bg-gray-50 transition-colors text-gray-700"
+            >
               {it}
             </li>
           ))}

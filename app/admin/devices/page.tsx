@@ -24,7 +24,7 @@ export default function DevicesPage() {
       <div className="mb-4 flex flex-wrap items-center gap-4">
         <input
           placeholder="Search Devices..."
-          className="flex-1 min-w-50 max-w-full md:max-w-lg p-2 rounded-full bg-accent border-none shadow-inner"
+          className="flex-1 min-w-50 max-w-full md:max-w-lg p-2.5 rounded-xl bg-white border border-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20"
         />
 
         <div className="ml-auto">

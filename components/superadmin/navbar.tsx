@@ -20,7 +20,7 @@ const Navbar = ({
         <span className="text-lg font-semibold tracking-wide flex items-center gap-2">
           <span>IDMS</span>
           <span className="text-sm font-normal bg-accent text-primary px-2 py-0.5 rounded-full">
-            Tenant Admin
+            SuperAdmin
           </span>
         </span>
       </div>

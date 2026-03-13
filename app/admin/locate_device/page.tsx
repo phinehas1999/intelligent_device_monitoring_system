@@ -32,12 +32,12 @@ export default function LocateDevicePage() {
       <div className="mb-4">
         <input
           placeholder="Search Devices..."
-          className="w-full max-w-xs p-3 rounded-full bg-accent border-none shadow-sm placeholder:text-sm"
+          className="w-full max-w-xs p-2.5 rounded-xl bg-white border border-gray-200 shadow-sm placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20"
         />
       </div>
 
       {/* Map area */}
-      <div className="rounded-2xl overflow-hidden shadow-md bg-white">
+      <div className="rounded-xl overflow-hidden shadow-sm bg-white border border-gray-100">
         <LocateMapClient />
       </div>
     </div>

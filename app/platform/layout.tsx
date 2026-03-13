@@ -1,14 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
-import Navbar from "@/components/admin/navbar";
-import Sidebar from "@/components/admin/sidebar";
+import Navbar from "@/components/superadmin/navbar";
+import Sidebar from "@/components/superadmin/sidebar";
 
-export default function AdminLayout({
+export default function PlatformLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const [collapsed, setCollapsed] = useState(false);
+
   // Responsive: collapse sidebar on small screens
   useEffect(() => {
     const handleResize = () => {
