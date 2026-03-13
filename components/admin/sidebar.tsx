@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, useEffect, useRef } from "react";
 import { Menu } from "lucide-react";
 import {
   LayoutDashboard,
@@ -11,6 +12,7 @@ import {
   ChartArea,
   Settings as SettingsIcon,
 } from "lucide-react";
+import { EllipsisVertical, LogOut } from "lucide-react";
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, href: "/admin" },
   { label: "Devices", icon: LayoutList, href: "/admin/devices" },
@@ -19,6 +21,47 @@ const navItems = [
   { label: "Analytics", icon: ChartArea, href: "/admin/analytics" },
   { label: "Settings", icon: SettingsIcon, href: "/admin/settings" },
 ];
+
+const ProfileMenu = () => {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const onDoc = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node))
+        setOpen(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, []);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="p-1 rounded hover:bg-white/10 transition-colors"
+        aria-label="Open profile menu"
+      >
+        <EllipsisVertical size={18} />
+      </button>
+      {open && (
+        <div className="absolute right-0 bottom-full mb-2 w-40 bg-primary border border-white/10 rounded-md shadow-lg z-40">
+          <button
+            onClick={() => {
+              // TODO: implement actual logout request
+              // e.g. call your sign-out route then redirect
+              setOpen(false);
+            }}
+            className="w-full text-left flex items-center gap-2 px-3 py-2 hover:bg-white/5"
+          >
+            <LogOut size={16} />
+            <span className="text-sm">Logout</span>
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
 
 const Sidebar = ({
   collapsed,
@@ -100,6 +143,7 @@ const Sidebar = ({
               <div className="text-xs text-accent/60 truncate">Admin</div>
             </div>
           )}
+          {!collapsed && <ProfileMenu />}
         </div>
       </div>
     </aside>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, useEffect, useRef } from "react";
 import { Menu } from "lucide-react";
 import {
   LayoutDashboard,
@@ -11,6 +12,7 @@ import {
   FileText,
   Receipt,
   LogOut,
+  EllipsisVertical,
 } from "lucide-react";
 
 const navItems = [
@@ -25,6 +27,46 @@ const navItems = [
   { label: "System Logs", icon: FileText, href: "/platform/system-logs" },
   { label: "Billing", icon: Receipt, href: "/platform/billing" },
 ];
+
+const ProfileMenu = () => {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const onDoc = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node))
+        setOpen(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, []);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="p-1 rounded hover:bg-white/10 transition-colors"
+        aria-label="Open profile menu"
+      >
+        <EllipsisVertical size={18} />
+      </button>
+      {open && (
+        <div className="absolute right-0 bottom-full mb-2 w-40 bg-primary border border-white/10 rounded-md shadow-lg z-40">
+          <button
+            onClick={() => {
+              // TODO: implement actual logout request
+              setOpen(false);
+            }}
+            className="w-full text-left flex items-center gap-2 px-3 py-2 hover:bg-white/5"
+          >
+            <LogOut size={16} />
+            <span className="text-sm">Logout</span>
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
 
 const Sidebar = ({
   collapsed,
@@ -99,6 +141,7 @@ const Sidebar = ({
               </div>
             </div>
           )}
+          {!collapsed && <ProfileMenu />}
         </div>
       </div>
     </aside>
