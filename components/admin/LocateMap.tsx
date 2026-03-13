@@ -1,60 +1,61 @@
 "use client";
 
-import { useState } from "react";
+import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 
 type Device = {
   id: number;
   name: string;
-  left: string; // percent
-  top: string; // percent
-  status: string;
+  lat: number;
+  lng: number;
+  status: "online" | "offline";
 };
 
-export default function LocateMap({ devices }: { devices: Device[] }) {
-  const [hover, setHover] = useState<number | null>(null);
+const devices: Device[] = [
+  { id: 1, name: "Device A", lat: 9.033, lng: 38.749, status: "online" },
+  { id: 2, name: "Device B", lat: 9.041, lng: 38.721, status: "offline" },
+  { id: 3, name: "Device C", lat: 9.028, lng: 38.73, status: "online" },
+];
 
+export default function LocateMap() {
   return (
-    <div className="relative w-full h-115 bg-white rounded-xl shadow-md overflow-hidden">
-      <div className="absolute inset-0 bg-linear-to-br from-[#fffaf6] to-background" />
+    <div className="w-full">
+      <MapContainer
+        center={[9.033, 38.74]}
+        zoom={13}
+        scrollWheelZoom={true}
+        dragging={true}
+        doubleClickZoom={true}
+        style={{ height: "420px", width: "100%" }}
+      >
+        <TileLayer
+          attribution="© OpenStreetMap"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
 
-      <div className="absolute inset-4 rounded-lg overflow-hidden border border-transparent">
-        {/* stylized map area */}
-        <div className="relative w-full h-full bg-[linear-gradient(180deg,#f6f4ef, #eef2f1)]">
-          {devices.map((d) => (
-            <button
-              key={d.id}
-              onMouseEnter={() => setHover(d.id)}
-              onMouseLeave={() => setHover(null)}
-              className="absolute -translate-x-1/2 -translate-y-1/2"
-              style={{ left: d.left, top: d.top }}
-              aria-label={d.name}
-            >
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md ring-2 ring-white">
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 2C8 2 5 5 5 9c0 6 7 13 7 13s7-7 7-13c0-4-3-7-7-7z"
-                    fill="#e11d48"
-                  />
-                  <circle cx="12" cy="9" r="2.5" fill="#fff" />
-                </svg>
-              </div>
-
-              {hover === d.id && (
-                <div className="absolute left-10 top-0 transform -translate-y-1/2 bg-white p-2 rounded-md text-sm shadow-md">
-                  <div className="font-semibold">{d.name}</div>
-                  <div className="text-xs text-gray-500">{d.status}</div>
+        {devices.map((d) => (
+          <CircleMarker
+            key={d.id}
+            center={[d.lat, d.lng]}
+            radius={16}
+            weight={4}
+            pathOptions={{
+              color: d.status === "online" ? "#16a34a" : "#dc2626",
+              fillColor: d.status === "online" ? "#16a34a" : "#dc2626",
+              fillOpacity: 0.85,
+            }}
+          >
+            <Popup>
+              <div className="text-base font-semibold">
+                {d.name}
+                <div className="text-xs text-gray-600 font-normal">
+                  {d.status}
                 </div>
-              )}
-            </button>
-          ))}
-        </div>
-      </div>
+              </div>
+            </Popup>
+          </CircleMarker>
+        ))}
+      </MapContainer>
     </div>
   );
 }

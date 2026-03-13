@@ -1,5 +1,5 @@
 import ChartBox from "@/components/admin/ChartBox";
-import LocateMap from "@/components/admin/LocateMap";
+import LocateMapClient from "@/components/admin/LocateMapClient";
 
 import StatCard from "@/components/admin/StatCard";
 import { Power, GlobeOff } from "lucide-react";
@@ -37,17 +37,8 @@ export default function LocateDevicePage() {
       </div>
 
       {/* Map area */}
-      <div
-        className="rounded-2xl overflow-hidden shadow-md bg-white"
-        style={{ minHeight: 420 }}
-      >
-        {/* Map image placeholder, rounded corners */}
-        <img
-          src="/map-placeholder.png"
-          alt="Map placeholder"
-          className="w-full h-105 object-cover"
-        />
-        {/* Example marker overlays could go here */}
+      <div className="rounded-2xl overflow-hidden shadow-md bg-white">
+        <LocateMapClient />
       </div>
     </div>
   );
