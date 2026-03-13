@@ -1,0 +1,54 @@
+import ChartBox from "@/components/admin/ChartBox";
+import LocateMap from "@/components/admin/LocateMap";
+
+import StatCard from "@/components/admin/StatCard";
+import { Power, GlobeOff } from "lucide-react";
+
+// Placeholder icons for stat cards
+const PlaceholderIcon = () => (
+  <div className="w-7 h-7 bg-gray-300 rounded-full" />
+);
+
+export default function LocateDevicePage() {
+  return (
+    <div className="w-full max-w-full">
+      <h1 className="text-2xl font-bold mb-4">Locate Devices</h1>
+
+      {/* Stat cards row - responsive full width */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <StatCard
+          icon={<Power size={20} className="text-primary" />}
+          title="Devices Online"
+          value={124}
+        />
+        <StatCard
+          icon={<GlobeOff size={20} className="text-primary" />}
+          title="Devices Offline"
+          value={3}
+        />
+      </div>
+
+      {/* Search bar */}
+      <div className="mb-4">
+        <input
+          placeholder="Search Devices..."
+          className="w-full max-w-xs p-3 rounded-full bg-accent border-none shadow-sm placeholder:text-sm"
+        />
+      </div>
+
+      {/* Map area */}
+      <div
+        className="rounded-2xl overflow-hidden shadow-md bg-white"
+        style={{ minHeight: 420 }}
+      >
+        {/* Map image placeholder, rounded corners */}
+        <img
+          src="/map-placeholder.png"
+          alt="Map placeholder"
+          className="w-full h-[420px] object-cover"
+        />
+        {/* Example marker overlays could go here */}
+      </div>
+    </div>
+  );
+}

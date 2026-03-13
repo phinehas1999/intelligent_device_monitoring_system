@@ -1,6 +1,11 @@
+"use client";
+import { useRouter } from "next/navigation";
+
 export default function DevicesTable() {
+  const router = useRouter();
   const columns = ["Asset Name", "Type", "Status", "Location", "Health Score"];
   const rows = Array.from({ length: 8 }).map((_, i) => ({
+    id: `${(i + 1).toString().padStart(6, "0")}`,
     name: `Device-${i + 1}`,
     type: "Electric Motor",
     status: i % 3 === 0 ? "Healthy" : i % 3 === 1 ? "Warning" : "Critical",
@@ -24,7 +29,11 @@ export default function DevicesTable() {
             </thead>
             <tbody>
               {rows.map((r, idx) => (
-                <tr key={idx} className="border-t last:border-b-0">
+                <tr
+                  key={idx}
+                  className="border-t last:border-b-0 cursor-pointer hover:bg-accent/60 transition"
+                  onClick={() => router.push(`/admin/devices/${r.id}`)}
+                >
                   <td className="py-4 px-4">{r.name}</td>
                   <td className="py-4 px-4">{r.type}</td>
                   <td className="py-4 px-4">{r.status}</td>

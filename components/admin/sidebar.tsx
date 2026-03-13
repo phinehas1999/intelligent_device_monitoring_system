@@ -15,7 +15,7 @@ const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, href: "/admin" },
   { label: "Devices", icon: LayoutList, href: "/admin/devices" },
   { label: "Alerts", icon: BellElectric, href: "/admin/alerts" },
-  { label: "Locate Device", icon: LocateFixed, href: "/admin/locate" },
+  { label: "Locate Device", icon: LocateFixed, href: "/admin/locate_device" },
   { label: "Analytics", icon: ChartArea, href: "/admin/analytics" },
   { label: "Settings", icon: SettingsIcon, href: "/admin/settings" },
 ];
@@ -58,7 +58,9 @@ const Sidebar = ({
               if (item.href === "/admin") {
                 isActive = pathname === "/admin" || pathname === "/admin/";
               } else {
-                isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+                isActive =
+                  pathname === item.href ||
+                  pathname.startsWith(item.href + "/");
               }
             }
             const ItemInner = (
