@@ -1,0 +1,18 @@
+{
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1773472600951,
+      "tag": "0000_init",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1773472984684,
+      "tag": "0001_tenant-isolation",
+      "breakpoints": true
+    }
+  ]
+}
