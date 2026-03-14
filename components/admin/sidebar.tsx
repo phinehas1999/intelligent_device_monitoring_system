@@ -22,14 +22,21 @@ const navItems = [
   { label: "Settings", icon: SettingsIcon, href: "/admin/settings" },
 ];
 
-const ProfileMenu = () => {
+const ProfileMenu = ({
+  userName,
+  userRole,
+  onLogout,
+}: {
+  userName?: string | null;
+  userRole?: string | null;
+  onLogout: () => void;
+}) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const onDoc = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node))
-        setOpen(false);
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     };
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
@@ -45,12 +52,15 @@ const ProfileMenu = () => {
         <EllipsisVertical size={18} />
       </button>
       {open && (
-        <div className="absolute right-0 bottom-full mb-2 w-40 bg-primary border border-white/10 rounded-md shadow-lg z-40">
+        <div className="absolute right-0 bottom-full mb-2 w-56 bg-primary border border-white/10 rounded-md shadow-lg z-40">
+          <div className="px-3 py-2 border-b border-white/5">
+            <div className="text-sm font-semibold truncate">{userName ?? "Admin"}</div>
+            <div className="text-xs text-accent/60 truncate">{userRole ?? "Admin"}</div>
+          </div>
           <button
             onClick={() => {
-              // TODO: implement actual logout request
-              // e.g. call your sign-out route then redirect
               setOpen(false);
+              onLogout();
             }}
             className="w-full text-left flex items-center gap-2 px-3 py-2 hover:bg-white/5"
           >
@@ -73,6 +83,47 @@ const Sidebar = ({
   const sidebarWidth = collapsed ? "w-16" : "w-64";
 
   const pathname = usePathname() || "";
+  const [user, setUser] = useState<null | { name?: string; role?: string; email?: string }>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    fetch("/api/auth/app-user", { credentials: "include" })
+      .then(async (res) => {
+        if (!res.ok) throw new Error("not-auth");
+        const data = await res.json();
+        return data;
+      })
+      .then((data) => {
+        if (!mounted) return;
+        setUser(data.appUser ?? null);
+      })
+      .catch(() => {
+        if (!mounted) return;
+        setUser(null);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const getInitials = (name?: string | null, email?: string | null) => {
+    if (name) {
+      const parts = name.trim().split(/\s+/);
+      if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+    if (email) return email.split("@")[0].slice(0, 2).toUpperCase();
+    return "PA";
+  };
+
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/signout", { method: "POST", credentials: "include" });
+    } catch (e) {
+      // ignore
+    }
+    window.location.href = "/auth/login";
+  };
 
   return (
     <aside
@@ -133,17 +184,15 @@ const Sidebar = ({
           className={`flex items-center gap-3 p-3 rounded-xl border border-white/10 ${collapsed ? "justify-center" : ""}`}
         >
           <div className="w-8 h-8 rounded-full bg-accent text-primary flex items-center justify-center font-bold">
-            PA
+            {getInitials(user?.name ?? null, user?.email ?? null)}
           </div>
           {!collapsed && (
             <div className="flex-1 overflow-hidden">
-              <div className="text-sm font-semibold truncate">
-                Phinehas Abdu
-              </div>
-              <div className="text-xs text-accent/60 truncate">Admin</div>
+              <div className="text-sm font-semibold truncate">{user?.name ?? "Phinehas Abdu"}</div>
+              <div className="text-xs text-accent/60 truncate">{user?.role ?? "Admin"}</div>
             </div>
           )}
-          {!collapsed && <ProfileMenu />}
+          {!collapsed && <ProfileMenu userName={user?.name ?? null} userRole={user?.role ?? null} onLogout={handleLogout} />}
         </div>
       </div>
     </aside>

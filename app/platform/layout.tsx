@@ -1,44 +1,32 @@
-"use client";
-import { useState, useEffect } from "react";
-import Navbar from "@/components/superadmin/navbar";
-import Sidebar from "@/components/superadmin/sidebar";
+import PlatformShell from "@/components/superadmin/PlatformShell";
+import { auth } from "@/lib/auth";
+import { findAppUserByAuthId } from "@/lib/app-user";
+import { cookies, headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default function PlatformLayout({
+export default async function PlatformLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [collapsed, setCollapsed] = useState(false);
+  const session = await auth.api.getSession({ headers: await headers() });
+  if (!session?.user?.id) {
+    redirect("/auth/login");
+  }
 
-  // Responsive: collapse sidebar on small screens
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) setCollapsed(true);
-      else setCollapsed(false);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const appUser = await findAppUserByAuthId(session.user.id);
+  if (!appUser) {
+    redirect("/auth/login?error=missing-app-user");
+  }
 
-  const sidebarWidth = collapsed ? 64 : 256; // px (w-16 or w-64)
+  const tenantCookie = (await cookies()).get("tenant_id")?.value;
+  if (tenantCookie && tenantCookie !== appUser.tenant_id) {
+    redirect("/auth/login?error=tenant-mismatch");
+  }
 
-  return (
-    <div className="min-h-screen bg-background">
-      <Sidebar
-        collapsed={collapsed}
-        toggleCollapsed={() => setCollapsed((c) => !c)}
-      />
-      <div
-        className="transition-all duration-300"
-        style={{ marginLeft: sidebarWidth }}
-      >
-        <Navbar
-          collapsed={collapsed}
-          toggleCollapsed={() => setCollapsed((c) => !c)}
-        />
-        <main className="mt-16 p-4 md:p-8">{children}</main>
-      </div>
-    </div>
-  );
+  if (appUser.role !== "SUPERADMIN") {
+    redirect("/admin");
+  }
+
+  return <PlatformShell>{children}</PlatformShell>;
 }

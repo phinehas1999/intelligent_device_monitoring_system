@@ -13,6 +13,13 @@
       "when": 1773472984684,
       "tag": "0001_tenant-isolation",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1773478833027,
+      "tag": "0002_users-auth-link",
+      "breakpoints": true
     }
   ]
 }

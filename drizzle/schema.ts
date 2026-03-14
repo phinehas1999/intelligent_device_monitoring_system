@@ -7,6 +7,7 @@ import {
   timestamp,
   jsonb,
   doublePrecision,
+  uniqueIndex,
 } from "drizzle-orm/pg-core";
 
 const userRole = pgEnum("role_enum", ["SUPERADMIN", "ADMIN"]);
@@ -29,16 +30,26 @@ export const tenants = pgTable("tenants", {
   created_at: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const users = pgTable("users", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  tenant_id: uuid("tenant_id")
-    .notNull()
-    .references(() => tenants.id),
-  email: text("email").notNull(),
-  password: text("password").notNull(),
-  role: userRole("role").notNull().default("ADMIN"),
-  created_at: timestamp("created_at").defaultNow().notNull(),
-});
+export const users = pgTable(
+  "users",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    tenant_id: uuid("tenant_id")
+      .notNull()
+      .references(() => tenants.id),
+    auth_user_id: text("auth_user_id").notNull(),
+    email: text("email").notNull(),
+    password: text("password").notNull(),
+    role: userRole("role").notNull().default("ADMIN"),
+    created_at: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => [
+    uniqueIndex("users_tenant_auth_user_unique").on(
+      table.tenant_id,
+      table.auth_user_id,
+    ),
+  ],
+);
 
 export const assets = pgTable("assets", {
   id: uuid("id").defaultRandom().primaryKey(),
