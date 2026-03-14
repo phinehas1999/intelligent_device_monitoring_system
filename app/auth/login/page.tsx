@@ -80,19 +80,13 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            className="w-full mt-2 py-2 rounded-lg bg-accent text-primary font-semibold hover:brightness-95 transition"
+            className="w-full mt-2 py-2 rounded-lg bg-secondary cursor-pointer text-accent font-semibold hover:brightness-95 transition"
             disabled={loading}
           >
             {loading ? "Signing in..." : "Sign in"}
           </button>
         </form>
-
-        <div className="mt-6 text-center text-sm text-accent/70">
-          Don’t have an account?{" "}
-          <Link href="/signup" className="text-accent hover:underline">
-            Sign up
-          </Link>
-        </div>
+        
       </div>
     </div>
   );
